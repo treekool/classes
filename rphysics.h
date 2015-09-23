@@ -11,7 +11,7 @@
 class rPhysics{
 public:
     double grandom(double, double);
-    double fft(double *,double *,int);
+    void fft(double *,double *,int);
 };
 
 #endif // RPHYSICS_H

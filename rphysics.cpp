@@ -18,7 +18,9 @@ double rPhysics::grandom(double M,double sigma){
     return M+y1*sigma;
 }
 
-void fft(double *real,double *imgn,int n){
+
+/* Быстрое фурье */
+void rPhysics::fft(double *real,double *imgn,int n){
     int step,start,old_start,i,j,theta=0;
     double tmpReal,tmpImgn;
 
@@ -41,10 +43,8 @@ void fft(double *real,double *imgn,int n){
     /****************************/
 
     for(step=1;step<n;step = step << 1){
-        //printf("\nSTEP: %d\n",step);
         old_start=0;
         for(start=step << 1;start<=n;start+=step << 1){
-            //printf(" (%d:)\n",start);
             theta = 0;
             for(i=old_start;i<start-step;i++){
                 j=i+step;
@@ -66,9 +66,7 @@ void fft(double *real,double *imgn,int n){
                 imgn[j] = tmpImgn;
                 theta ++;
 
-                //printf("%d\n",theta);
             }
-            //printf("\n");
             old_start = start;
         }
     }
