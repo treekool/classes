@@ -19,6 +19,11 @@ double rPhysics::grandom(double M,double sigma){
 }
 
 
+void rPhysics::init_random(){
+    srand(time(0));
+    return;
+}
+
 /* Быстрое фурье */
 void rPhysics::fft(double *real,double *imgn,int n){
     int step,start,old_start,i,j,theta=0;
@@ -71,3 +76,13 @@ void rPhysics::fft(double *real,double *imgn,int n){
         }
     }
 }
+
+/* Вычисление дисперсии */
+double rPhysics::dispersion(double *x,int A,int B){
+    double medial_x=0,sigma=0;
+    for(int i=A;i<B;i++) medial_x += x[i]/(B-A);
+    for(int i=A;i<B;i++) sigma += (x[i]-medial_x)*(x[i]-medial_x)/(B-A-1);
+    return sqrt(sigma);
+}
+
+/* EOF */
