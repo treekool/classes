@@ -28,6 +28,8 @@ public:
     double circle_get(int);
     /* рекурсивное выполнение метода */
     out exec(double);
+    /* усреднение medial(x[N],M,Q,N) */
+    out medial(double *,int,int);
     
 };
 

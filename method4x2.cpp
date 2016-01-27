@@ -30,7 +30,7 @@ double Method4x2::circle_get(int pos){
 Method4x2::out Method4x2::exec(double in){
     out ret;
     
-    double c1,c1t,c2t,c1o,c2o;
+    double c1t,c2t,c1o,c2o;
   
     x++;circle_count++;
     if(circle_count>=circle_size){
@@ -62,6 +62,34 @@ Method4x2::out Method4x2::exec(double in){
     ret.freq = acos(S1/S2)/(2*M_PI*Q);
     ret.ampl = sqrt(S3)/(sqrt(M*2)*sin(2*M_PI*Q*ret.freq));
     
+    return ret;
+}
+
+Method4x2::out Method4x2::medial(double *x,int M,int Q){
+    out ret;
+
+    double c1,c2;
+    long double S1,S2,S3;
+    double abs_sin;
+
+    S1 = 0.0;
+    S2 = S1;
+    S3 = S1;
+
+    for(int m=3*Q+M; m>0; m--){
+        c1 = x[m-Q]*x[m-Q] + x[m-2*Q]*x[m-2*Q] - x[m]*x[m-2*Q] - x[m-Q]*x[m-3*Q];
+        c2 = x[m-Q]*x[m-2*Q] - x[m]*x[m-3*Q];
+
+        S1 += c1*c2;
+        S2 += c1*c1;
+        S3 += c1;
+    }
+
+    ret.freq = acos(S1/S2)/(2*M_PI*Q);
+    abs_sin = sin(2*M_PI*ret.freq*Q);
+    if(abs_sin<0) abs_sin = -abs_sin;
+    ret.ampl = sqrt(S3)/(sqrt(2*M)*abs_sin);
+
     return ret;
 }
 
